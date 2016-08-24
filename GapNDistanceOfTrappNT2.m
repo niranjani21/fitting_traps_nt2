@@ -67,90 +67,10 @@ for ksize=1:8
     y1(ksize,5)=k3.p2;
 end
 K=[1:8];
-[n1,hn1]=fit(K',vals(:,1),'(6*a)/((x+1)*(2*x+1))');
-[n2,hn2]=fit(K',vals(:,2),'(6*a)/((x+1)*(2*x+1))');
-[n3,hn3]=fit(K',vals(:,3),'(6*a)/((x+1)*(2*x+1))');
 [n4,hn4]=fit(K',vals(:,4),'(6*625)/((x+1)*(2*x+1))+(b/x)+((3*x*(x+1))/(2*(2*x+1)))');
 
-out(1,1)=n1.a;
-out(1,2)=n2.a;
-out(1,3)=n3.a;
-out(1,4)=n4.a;
-out(1,5)=n4.b;
+out(1,1)=n4.a;
+out(1,2)=n4.b;
  
 % outfile=sprintf('coeff_nt%d.txt',nt);
 % dlmwrite(outfile,y1);
-
-
-%% plotting
-
-a=importdata('coeff1_nt2.txt');
-xp1=2; 
-k=1; j=2;
-
-for i=xp1+1:20
-    val(i-xp1,k)=(a(j,2)*xp1)+(a(j,3)*i)+a(j,4);
-end
-
-x=3:20;
-y=val;
-g=polyfit(x',y,1);
-yy=polyval(g,x');
-plot(x',yy,'LineWidth',2.0); hold on;
-plot(x',y,'*','MarkerSize',10.0);
-xlabel('Trap position ($$ x_{p^3} $$)','Interpreter','Latex',...
-    'FontName','Times New Roman','FontSize',12,'FontWeight','b');
-ylabel('MFPT','Interpreter','Latex','FontName','Times New Roman',...
-    'FontSize',12,'FontWeight','b');
-h=text('Interpreter','Latex','String','$$ T = ax_{p^1}+bx_{p^2}+c $$','Position',[11 715],'FontSize',13,'FontWeight','b');
-
-%%
-c=importdata('coeff1_nt2.txt');
-
-subplot(2,2,1); 
-x=c(:,1);
-y=c(:,2);
-g=polyfit(x,y,1);
-yy=polyval(g,x);
-plot(x,yy,'r','LineWidth',2.0); hold on;
-plot(x,y,'*','MarkerSize',10.0);
-xlabel('a','Interpreter','Latex','FontName','Times New Roman','FontSize',10,'FontWeight','b');
-
-subplot(2,2,2);
-y=c(:,3);
-g=polyfit(x,y,1);
-yy=polyval(g,x);
-plot(x,yy,'r','LineWidth',2.0); hold on;
-plot(x,y,'*','MarkerSize',10.0);
-xlabel('b','Interpreter','Latex','FontName','Times New Roman','FontSize',10,'FontWeight','b');
-
-subplot(2,2,[3 4]);
-y=c(:,4);
-g=polyfit(x,y,1);
-yy=polyval(g,x);
-plot(x,yy,'r','LineWidth',2.0); hold on;
-plot(x,y,'*','MarkerSize',10.0);
-xlabel('c','Interpreter','Latex','FontName','Times New Roman','FontSize',10,'FontWeight','b');
-
-ylabel('$$ \tau_t -1 $$','Interpreter','Latex','FontName','Times New Roman','FontSize',10,'FontWeight','b');
-title('Inset I','Interpreter','Latex','FontName','Times New Roman','FontSize',10,'FontWeight','b');
-
-%%
-a=importdata('coeff1_nt2.txt');
-xp1=2; 
-k=1;
-for j=3:2:10
-    txt='\tau_t';
-    leg{k,1}=sprintf('%s : %d',txt,j);
-    for i=xp1+1:20
-        val(i-xp1,k)=(a(j,2)*xp1)+(a(j,3)*i)+a(j,4);
-    end
-    k=k+1;
-end
-plot(val,'LineWidth',2.0); legend(leg);
-xlabel('Trap position ($$ x_{p^3} $$)','Interpreter','Latex',...
-    'FontName','Times New Roman','FontSize',12,'FontWeight','b');
-ylabel('MFPT','Interpreter','Latex','FontName','Times New Roman',...
-    'FontSize',12,'FontWeight','b');
-h=text('Interpreter','Latex','String','$$ T = ax_{p^1}+bx_{p^2}+cx_{p^3}+d $$','Position',[14 756],'FontSize',13,'FontWeight','b');
-
